@@ -1,6 +1,7 @@
 'use strict';
 
 const todos = require('./todos');
+const ptoc = require('./ptoc');
 
 module.exports.hello = (event, context, callback) => {
   const response = {
@@ -17,10 +18,9 @@ module.exports.hello = (event, context, callback) => {
   // callback(null, { message: 'Go Serverless v1.0! Your function executed successfully!', event });
 };
 
-module.exports.getTodos = (event, context, callback) =>
-  callback(null, {
+module.exports.getTodos = ptoc((event, context) =>
+  todos.getTodos(0).then(result => ({
     statusCode: 200,
-    body: JSON.stringify(
-      todos.getTodos(0)
-    )
-  });
+    body: JSON.stringify(result)
+  }))
+  );
