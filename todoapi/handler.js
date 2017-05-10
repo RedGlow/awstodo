@@ -1,7 +1,7 @@
 'use strict';
 
 const todos = require('./todos');
-const ptoc = require('./ptoc');
+const ptoc = require('./promisetocallback');
 
 module.exports.hello = (event, context, callback) => {
   const response = {
