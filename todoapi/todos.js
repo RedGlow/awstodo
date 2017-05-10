@@ -1,7 +1,7 @@
 'use strict';
 
-module.exports.getTodos = (userId) => [];
+module.exports.getTodos = (userId) => Promise.resolve([]);
 
-module.exports.addTodo = (userId, todo) => null;
+module.exports.addTodo = (userId, todo) => Promise.resolve();
 
-module.exports.removeTodo = (userId, todoId) => null;
+module.exports.removeTodo = (userId, todoId) => Promise.resolve();
