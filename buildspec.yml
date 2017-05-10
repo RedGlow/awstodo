@@ -7,4 +7,5 @@ phases:
   build:
     commands:
       - cd todoapi
+      - npm test
       - serverless deploy
