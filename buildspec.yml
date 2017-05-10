@@ -6,4 +6,5 @@ phases:
       - npm install -g serverless
   build:
     commands:
+      - cd todoapi
       - serverless deploy --stage cicd
