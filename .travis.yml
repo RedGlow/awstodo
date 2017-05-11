@@ -5,6 +5,5 @@ install:
   - npm install
   - npm install -g serverless
 script:
-  - npm test
-  - npm run integrationtest
-  - cd todoapi ; serverless deploy --region eu-central-1
+  - chmod a+x ./travis-script.sh
+  - ./travis-script.sh
