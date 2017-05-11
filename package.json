@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha todoapi/*.spec.js"
+    "test": "mocha todoapi/*.spec.js",
+    "integrationtest": "mocha tests/*.js"
   },
   "repository": {
     "type": "git",
@@ -21,5 +22,8 @@
     "aws-sdk": "^2.49.0",
     "chai": "^3.5.0",
     "mocha": "^3.3.0"
+  },
+  "dependencies": {
+    "moment": "^2.18.1"
   }
 }
