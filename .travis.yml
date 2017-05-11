@@ -6,4 +6,4 @@ install:
   - npm install -g serverless
 script:
   - npm test
-  - cd todoapi ; serverless deploy
+  - cd todoapi ; serverless deploy --region eu-central-1
