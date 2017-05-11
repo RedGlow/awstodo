@@ -6,6 +6,4 @@ install:
   - npm install -g serverless
 script:
   - npm test
-deploy:
-  production:
-    - cd todoapi ; serverless deploy
+  - cd todoapi ; serverless deploy
