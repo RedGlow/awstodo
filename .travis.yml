@@ -7,4 +7,5 @@ install:
 script:
   - npm test
 deploy:
-  - cd todoapi ; serverless deploy
+  production:
+    - cd todoapi ; serverless deploy
