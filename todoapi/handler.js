@@ -1,7 +1,8 @@
 'use strict';
 
-const todos = require('./todos');
 const ptoc = require('./promisetocallback');
+const responses = require('./responses');
+const todos = require('./todos');
 
 module.exports.hello = (event, context, callback) => {
   const response = {
@@ -19,8 +20,5 @@ module.exports.hello = (event, context, callback) => {
 };
 
 module.exports.getTodos = ptoc((event, context) =>
-  todos.getTodos(0).then(result => ({
-    statusCode: 200,
-    body: JSON.stringify(result)
-  }))
-  );
+  responses.getTodosTransformer(todos.getTodos(0))
+);
