@@ -5,4 +5,4 @@ npm run integrationtest
 cp package.json todoapi
 cd todoapi
 npm install
-serverless deploy --region eu-central-1
+serverless deploy
