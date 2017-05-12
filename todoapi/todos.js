@@ -7,6 +7,8 @@ aws.config.update({ region: 'eu-central-1' });
 
 const dynamodb = new aws.DynamoDB();
 
+const tableName = "TodosTest";
+
 /**
  * Get the list of todos for given username.
  * 
@@ -14,7 +16,7 @@ const dynamodb = new aws.DynamoDB();
  * @return {Promise<any[]>}     A promise containing the list of todos.
  */
 module.exports.getTodos = (username) => new Promise((resolve, reject) => dynamodb.query({
-    TableName: "TodosTest",
+    TableName: tableName,
     KeyConditionExpression: "username = :un",
     ProjectionExpression: "username,title,content,#TS",
     ExpressionAttributeValues: {
@@ -43,7 +45,7 @@ module.exports.getTodos = (username) => new Promise((resolve, reject) => dynamod
  */
 module.exports.addTodo = (username, title, content) => new Promise((resolve, reject) => {
     dynamodb.putItem({
-        TableName: "TodosTest",
+        TableName: tableName,
         Item: {
             username: { S: username },
             timestamp: { N: moment.utc().valueOf().toString() },
@@ -69,6 +71,6 @@ module.exports.removeTodo = (username, timestamp) => new Promise((resolve, rejec
                 N: timestamp.toString()
             }
         },
-        TableName: "TodosTest"
+        TableName: tableName
     }, (err, data) => err ? reject(err) : resolve());
 });
