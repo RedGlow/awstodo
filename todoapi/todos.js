@@ -7,15 +7,14 @@ aws.config.update({ region: 'eu-central-1' });
 
 const dynamodb = new aws.DynamoDB();
 
-const tableName = "TodosTest";
-
 /**
  * Get the list of todos for given username.
  * 
+ * @param {string} tablename    The name of the table.
  * @param {string} username     The username to check.
  * @return {Promise<any[]>}     A promise containing the list of todos.
  */
-module.exports.getTodos = (username) => new Promise((resolve, reject) => dynamodb.query({
+module.exports.getTodos = (tableName, username) => new Promise((resolve, reject) => dynamodb.query({
     TableName: tableName,
     KeyConditionExpression: "username = :un",
     ProjectionExpression: "username,title,content,#TS",
@@ -43,7 +42,7 @@ module.exports.getTodos = (username) => new Promise((resolve, reject) => dynamod
  * @param   {string} content
  * @return  {Promise}
  */
-module.exports.addTodo = (username, title, content) => new Promise((resolve, reject) => {
+module.exports.addTodo = (tableName, username, title, content) => new Promise((resolve, reject) => {
     dynamodb.putItem({
         TableName: tableName,
         Item: {
@@ -61,7 +60,7 @@ module.exports.addTodo = (username, title, content) => new Promise((resolve, rej
  * @param   {string} username
  * @param   {moment} timestamp
  */
-module.exports.removeTodo = (username, timestamp) => new Promise((resolve, reject) => {
+module.exports.removeTodo = (tableName, username, timestamp) => new Promise((resolve, reject) => {
     dynamodb.deleteItem({
         Key: {
             "username": {

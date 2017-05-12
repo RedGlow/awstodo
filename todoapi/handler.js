@@ -19,6 +19,6 @@ module.exports.hello = (event, context, callback) => {
   // callback(null, { message: 'Go Serverless v1.0! Your function executed successfully!', event });
 };
 
-module.exports.getTodos = ptoc((event, context) =>
-  responses.getTodosTransformer(todos.getTodos(0))
+module.exports.getTodos = ptoc((event) =>
+  responses.getTodosTransformer(todos.getTodos(event.stageVariables.todos_table, "RedGlow"))
 );

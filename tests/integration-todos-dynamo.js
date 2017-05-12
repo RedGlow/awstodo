@@ -10,7 +10,7 @@ const dynamodb = new aws.DynamoDB();
 
 describe('todos', () => {
     const emptyDb = () => new Promise((resolve, reject) => dynamodb.scan({
-        TableName: "TodosTest",
+        TableName: "todos-dev",
         ExpressionAttributeNames: {
             "#UN": "username",
             "#TS": "timestamp"
@@ -18,7 +18,7 @@ describe('todos', () => {
         ProjectionExpression: "#UN, #TS"
     }, (err, result) => err ? reject(err) : result.Items.length == 0 ? resolve() : dynamodb.batchWriteItem({
         RequestItems: {
-            "TodosTest": result.Items.map(entry => ({
+            "todos-dev": result.Items.map(entry => ({
                 DeleteRequest: {
                     Key: {
                         username: entry.username,
@@ -41,15 +41,15 @@ describe('todos', () => {
 
     it('gets no todo if the DB is empty', () => {
         // empty the DB
-        return emptyDb().then(() => todos.getTodos("RedGlow").then(result => {
+        return emptyDb().then(() => todos.getTodos("todos-dev", "RedGlow").then(result => {
             assert.equal(result.length, 0);
         }));
     });
 
     it('gets one todo after it is added', () => {
         return emptyDb()
-            .then(() => todos.addTodo("RedGlow", "Title", "Content"))
-            .then(() => waitRepeat(() => todos.getTodos("RedGlow").then(result => {
+            .then(() => todos.addTodo("todos-dev", "RedGlow", "Title", "Content"))
+            .then(() => waitRepeat(() => todos.getTodos("todos-dev", "RedGlow").then(result => {
                 assert.equal(result.length, 1);
                 var entry = result[0];
                 assert.equal(entry.username, "RedGlow");
@@ -61,11 +61,11 @@ describe('todos', () => {
 
     it('gets no todos after one is added and consequently removed', () => {
         return emptyDb()
-            .then(() => todos.addTodo("RedGlow", "Title", "Content"))
-            .then(() => waitRepeat(() => todos.getTodos("RedGlow").then(result => {
+            .then(() => todos.addTodo("todos-dev", "RedGlow", "Title", "Content"))
+            .then(() => waitRepeat(() => todos.getTodos("todos-dev", "RedGlow").then(result => {
                 assert.equal(result.length, 1);
-                return todos.removeTodo("RedGlow", result[0].timestamp).then(() =>
-                    waitRepeat(() => todos.getTodos("RedGlow").then(result => {
+                return todos.removeTodo("todos-dev", "RedGlow", result[0].timestamp).then(() =>
+                    waitRepeat(() => todos.getTodos("todos-dev", "RedGlow").then(result => {
                         assert.equal(result.length, 0);
                     }))
                 );
