@@ -13,6 +13,9 @@ functions:
       - http:
           path: hello
           method: get
+      - http:
+          path: hello
+          method: post
   gettodos:
     handler: handler.getTodos
     events:
