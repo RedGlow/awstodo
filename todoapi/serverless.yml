@@ -51,6 +51,7 @@ resources:
               Action:
                 - dynamodb:GetItem
                 - dynamodb:PutItem
+                - dynamodb:Query
               Resource: arn:aws:dynamodb:*:*:table/todos-${opt:stage}
         Roles:
           - Ref: IamRoleLambdaExecution
