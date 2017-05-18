@@ -22,6 +22,18 @@ functions:
       - http:
           path: todos
           method: get
+  addtodo:
+    handler: handler.addTodo
+    events:
+      - http:
+          path: todos
+          method: post
+  removetodo:
+    handler: handler.removeTodo
+    events:
+      - http:
+          path: todos/{timestamp}
+          method: delete
 
 resources:
   Resources:
@@ -54,6 +66,7 @@ resources:
               Action:
                 - dynamodb:GetItem
                 - dynamodb:PutItem
+                - dynamodb:DeleteItem
                 - dynamodb:Query
               Resource: arn:aws:dynamodb:*:*:table/todos-${opt:stage}
         Roles:

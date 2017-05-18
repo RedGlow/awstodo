@@ -40,18 +40,19 @@ module.exports.getTodos = (tableName, username) => new Promise((resolve, reject)
  * @param   {string} username
  * @param   {string} title
  * @param   {string} content
- * @return  {Promise}
+ * @return  {Promise<void>}
  */
 module.exports.addTodo = (tableName, username, title, content) => new Promise((resolve, reject) => {
+    const timestamp = moment.utc().valueOf();
     dynamodb.putItem({
         TableName: tableName,
         Item: {
             username: { S: username },
-            timestamp: { N: moment.utc().valueOf().toString() },
+            timestamp: { N: timestamp.toString() },
             title: { S: title },
             content: { S: content }
         }
-    }, (err, data) => err ? reject(err) : resolve());
+    }, (err, data) => err ? reject(err) : resolve(timestamp));
 });
 
 /**

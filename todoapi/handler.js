@@ -19,6 +19,22 @@ module.exports.hello = (event, context, callback) => {
   // callback(null, { message: 'Go Serverless v1.0! Your function executed successfully!', event });
 };
 
-module.exports.getTodos = ptoc((event) =>
+module.exports.getTodos = ptoc(event =>
   responses.getTodosTransformer(todos.getTodos(event.stageVariables.todos_table, "RedGlow"))
+);
+
+module.exports.addTodo = ptoc(event =>
+  new Promise(resolve => resolve(JSON.parse(event.body)))
+    .then(data => responses.addTodoTransformer(
+      todos.addTodo(event.stageVariables.todos_table, "RedGlow", data.title, data.content),
+      event))
+);
+
+module.exports.removeTodo = ptoc(event =>
+  responses.removeTodoTransformer(
+    todos.removeTodo(
+      event.stageVariables.todos_table,
+      "RedGlow",
+      parseInt(event.pathParameters.timestamp))
+  )
 );
