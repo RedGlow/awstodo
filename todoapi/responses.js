@@ -48,7 +48,4 @@ module.exports.addTodoTransformer = (todosPromise, event) =>
 module.exports.removeTodoTransformer = todosPromise =>
     todosPromise
         .then(() => getJSONResponse(204))
-        .catch(error => {
-            console.error("Call error:\n- " + error.name + "\n- " + error.message + "\n" + error.stack);
-            getJSONResponse(500, error.message);
-        });
+        .catch(error => getJSONResponse(500, error.message));
